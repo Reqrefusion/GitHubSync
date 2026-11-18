@@ -1,0 +1,38 @@
+{
+	"name": "GitHubSync",
+	"version": "1.1.0",
+	"author": [
+		"Reqrefusion"
+	],
+	"description": "Notify configurable GitHub sync endpoints through the MediaWiki job queue after page saves.",
+	"type": "other",
+	"requires": {
+		"MediaWiki": ">= 1.37.0"
+	},
+	"AutoloadNamespaces": {
+		"MediaWiki\\Extension\\GitHubSync\\": "includes"
+	},
+	"Hooks": {
+		"PageSaveComplete": [
+			"MediaWiki\\Extension\\GitHubSync\\Hooks::onPageSaveComplete"
+		]
+	},
+	"JobClasses": {
+		"githubSync": "MediaWiki\\Extension\\GitHubSync\\Job\\GithubSyncJob"
+	},
+	"manifest_version": 2,
+	"config": {
+		"GitHubSyncEndpoints": {
+			"value": [],
+			"description": "HTTP(S) endpoints receiving page_title, user and comment as GET parameters."
+		},
+		"GitHubSyncConnectTimeout": {
+			"value": 3,
+			"description": "Connection timeout in seconds."
+		},
+		"GitHubSyncTimeout": {
+			"value": 10,
+			"description": "Request timeout in seconds."
+		}
+	}
+}

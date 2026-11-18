@@ -1,0 +1,15 @@
+name: Checks
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check PHP syntax
+        run: find includes examples tests -name '*.php' -print0 | xargs -0 -n1 php -l
+      - name: Validate manifest
+        run: python3 -m json.tool extension.json > /dev/null
+      - name: Check hook and job behavior
+        run: php -n tests/smoke.php
